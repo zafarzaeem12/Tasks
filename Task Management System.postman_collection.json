@@ -1,0 +1,329 @@
+{
+	"info": {
+		"_postman_id": "cbd5232c-0462-482f-bcc7-05300f768bf6",
+		"name": "Task Management System",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28903480"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "createUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{local}}",
+							"host": [
+								"{{local}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "otp verify",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{local}}",
+							"host": [
+								"{{local}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "complete profile",
+					"request": {
+						"method": "POST",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{local}}",
+							"host": [
+								"{{local}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "forget password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{local}}",
+							"host": [
+								"{{local}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reset password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{local}}",
+							"host": [
+								"{{local}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "edit user",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{local}}",
+							"host": [
+								"{{local}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "profile",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}",
+							"host": [
+								"{{local}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete user",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{local}}",
+							"host": [
+								"{{local}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "blocked user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{local}}",
+							"host": [
+								"{{local}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZTQ5MGE0MTMxMWMyMWY1YzU4YmYyMSIsImlhdCI6MTY5MjcwMjY3NCwiZXhwIjoxNjkyNzA2Mjc0fQ.u1-Pf0mHvJzMW5YGHWCkhr3mh7L-FED-I2TmZeFBPKg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/api/logout",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Tasks",
+			"item": [
+				{
+					"name": "createTask",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZTQ5YTk5NjgyZjNjNzI3Y2ZmNTU1NCIsImlhdCI6MTY5MjcwMzQ0OSwiZXhwIjoxNjkyNzA3MDQ5fQ.2Q0Y9cOPaTglk4pcJcuX4-H2zSs_rSug3S0p-eLDC_s",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\" : \"backend task\",\r\n    \"description\" : \"user management system\",\r\n    \"due_date\" : \"2023-10-12T16:25:00Z\" , \r\n    \"task_assign_to\" : \"64e49a99682f3c727cff5554\",\r\n    \"task_provider\" : \"64e490a41311c21f5c58bf21\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/api/createtask",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"createtask"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getalltask",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}",
+							"host": [
+								"{{local}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "specficTask",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}",
+							"host": [
+								"{{local}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update task",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{local}}",
+							"host": [
+								"{{local}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete task",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{local}}",
+							"host": [
+								"{{local}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "task assigned",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZTQ5YTk5NjgyZjNjNzI3Y2ZmNTU1NCIsImlhdCI6MTY5MjcwMzQ0OSwiZXhwIjoxNjkyNzA3MDQ5fQ.2Q0Y9cOPaTglk4pcJcuX4-H2zSs_rSug3S0p-eLDC_s",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"task_assign_to\" : \"64e490a41311c21f5c58bf21\",\r\n    \"task_provider\" : \"64e49a99682f3c727cff5554\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/api/task_assigned/64e4a0bab878474eee211c10",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"task_assigned",
+								"64e4a0bab878474eee211c10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "task completed assigner",
+					"request": {
+						"method": "PUT",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "task completed by provider",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
