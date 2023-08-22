@@ -24,7 +24,8 @@ const {
     delete_task,
     Assigned_Task,
     Task_Completed_By_Assigner,
-    Task_Completed_By_Provider
+    Task_Completed_By_Provider,
+    All_Completed_Task
 } = require('../controller/Task')
 
 // user api start here
@@ -50,6 +51,7 @@ router.get('/get' , auth , getallTask );
 router.get('/get/:id' , auth , get_specfic_task );
 router.put('/update/:id' , auth , update_task );
 router.delete('/delete/:id' , auth , delete_task );
+router.get('/completed' ,auth ,All_Completed_Task )
 // task api start here
 
 module.exports = router

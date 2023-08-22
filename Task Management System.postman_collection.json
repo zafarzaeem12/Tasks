@@ -322,6 +322,14 @@
 						"header": []
 					},
 					"response": []
+				},
+				{
+					"name": "completed task",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
 				}
 			]
 		}

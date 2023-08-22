@@ -73,6 +73,14 @@ const Task_Completed_By_Provider = async (req,res,next) => {
         req.status(500).send({ message : "not completed"})
     }
 }
+const All_Completed_Task = async (req,res,next) => {
+try{
+    const completed = await Task.find({ is_task_Completed : true });
+    res.status(200).send({ message : `Total ${completed.length} Completed Tasks` ,data : completed })
+}catch(err){
+    res.status(500).send({ message : "no task found"})
+}
+}
 const getallTask = async (req, res, next) => {
   try {
     const alldata = await Task.find()
@@ -149,5 +157,6 @@ module.exports = {
   delete_task,
   Assigned_Task,
   Task_Completed_By_Assigner,
-  Task_Completed_By_Provider
+  Task_Completed_By_Provider,
+  All_Completed_Task
 };
