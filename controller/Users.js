@@ -5,9 +5,9 @@ const moment = require("moment");
 
 const Register_New_User = async (req, res) => {
   const typed_Email = req.body.email;
-  
+
   try {
-    const emailValidation = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+    const emailValidation = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     const check_email = await User.findOne({ email: typed_Email });
     const pass = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{7,15}$/;
 
@@ -16,60 +16,67 @@ const Register_New_User = async (req, res) => {
         message: "this email is already exists",
         status: 400,
       });
-    } 
-    else if (!typed_Email) {
+    } else if (!typed_Email) {
       res.send({
         message: "Email is required",
         status: 404,
-      })
-    }
-    else if (!typed_Email.match(emailValidation)) {
+      });
+    } else if (!typed_Email.match(emailValidation)) {
       res.send({
         message: "Email is not valid",
         status: 404,
-      })
-    }
-    else if (!req.body.password) {
+      });
+    } else if (!req.body.password) {
       res.send({
         message: "Password is required",
         status: 404,
-      })
-    }
-    else if (!req.body.password.match(pass)) {
+      });
+    } else if (!req.body.password.match(pass)) {
       res.send({
-        message: "Password should be 8 characters long (should contain uppercase, lowercase, numeric and special character)",
+        message:
+          "Password should be 8 characters long (should contain uppercase, lowercase, numeric and special character)",
         status: 404,
-      })
-    }
-    else {
-     
+      });
+    } else if (!req.body.phone_number) {
+      return res.send({ message: "Phone no Field is required", status: 400 });
+    } else if (req.body.phone_number.length > 11) {
+      res.send({
+        message: "No phone_number more than exceed with 11 digits",
+        status: 400,
+      });
+    } else {
       const newUser = {
         email: typed_Email,
         password: CryptoJS.AES.encrypt(
           req.body.password,
           process.env.SECRET_KEY
         ).toString(),
+        user_image: req.file
+          ? req.file.path.replace(/\\/g, "/")
+          : req.body.user_image,
+        phone_number: req.body.phone_number,
+        user_is_profile_complete: true,
       };
-      const Register = await User.create(newUser)
+      const Register = await User.create(newUser);
 
       const { _id, ...others } = Register;
 
-    const num = Math.floor(Math.random() * 900000) + 100000;
-    const nums = await User.findOneAndUpdate(
-      { _id: _id },
-      {
-        $set: {
-          verification_code: num,
+      const num = Math.floor(Math.random() * 900000) + 100000;
+      const nums = await User.findOneAndUpdate(
+        { _id: _id },
+        {
+          $set: {
+            verification_code: num,
+          },
         },
-      },
-      { new: true }
-    );
-    const { password, email, verification_code, ...othersfields } = nums;
-    return res.status(201).send({
-      message: "OTP sent for New user confirmation",
-      status: 201,
-      data: { verification_code, email },
-    });
+        { new: true }
+      );
+      const { password, email, verification_code, ...othersfields } = nums;
+      return res.status(201).send({
+        message: "OTP sent for New user confirmation",
+        status: 201,
+        data: { verification_code, email },
+      });
     }
   } catch (err) {
     res.send({
@@ -83,7 +90,6 @@ const LoginRegisteredUser = async (req, res, next) => {
   try {
     const email = req.body.email;
     const password = req.body.password;
-    
 
     const LoginUser = await User.findOne({
       email: email,
@@ -127,43 +133,6 @@ const LoginRegisteredUser = async (req, res, next) => {
   }
 };
 
-const CompleteProfile = async (req,res,next) => {
-  const email = req.body.email
-  try{
-    if(!email){
-      return res.send({ message : "Email Field is required" , status :400})
-    }
-    else if(!req.body.phone_number){
-      return res.send({ message : "Phone no Field is required" , status :400})
-    }
-    else if (req.body.phone_number.length > 11) {
-      res.send({
-        message: "No phone_number more than exceed with 11 digits",
-        status: 400,
-      });
-      
-    }
-    else{
-      console.log(req.file.path.replace(/\\/g, "/"))
-      const findemail = await User.findOne({ email : email})
-      const Data = {
-        user_image : req.file ? req.file.path.replace(/\\/g, "/") : req.body.user_image,
-        phone_number : req.body.phone_number,
-        email : findemail.email,
-        user_is_profile_complete :true
-      }
-       await User.updateOne(
-        { _id : findemail._id },
-        { $set : Data},
-        {new : true}
-      )
-      res.status(200).send({ message : "Profile Complete Successfully"})
-    }
-  }catch(err){
-    res.status(404).send({ message : "Profile Not Completed"})
-  }
-}
-
 const VerifyRegisteredUser = async (req, res) => {
   try {
     const Id = req.id;
@@ -185,7 +154,7 @@ const VerifyRegisteredUser = async (req, res) => {
 
 const Update_Existing_User = async (req, res, next) => {
   const Id = req.id;
-  console.log(Id)
+  console.log(Id);
   try {
     const Update_user = await User.findByIdAndUpdate(
       { _id: Id },
@@ -193,7 +162,9 @@ const Update_Existing_User = async (req, res, next) => {
         $set: {
           name: req.body.name,
           phone_number: req.body.phone_number,
-          user_image: req.file ? req.file.path.replace(/\\/g, "/") : req.body.user_image,
+          user_image: req.file
+            ? req.file.path.replace(/\\/g, "/")
+            : req.body.user_image,
           user_is_profile_complete: true,
         },
       },
@@ -326,7 +297,7 @@ const User_Reset_Password = async (req, res, next) => {
         data?.email && data?._id,
         {
           $set: {
-            user_is_forgot : false,
+            user_is_forgot: false,
             password: CryptoJS.AES.encrypt(
               typed_password,
               process.env.SECRET_KEY
@@ -394,10 +365,10 @@ const Delete_and_Blocked_Existing_User_Temporaray = async (req, res, next) => {
   }
 };
 
-const Logout_Existing_User = async (req,res,next) => {
-  const ID = req.id
-  try{
-    const Empty_token = await User.findOne({ _id : ID });
+const Logout_Existing_User = async (req, res, next) => {
+  const ID = req.id;
+  try {
+    const Empty_token = await User.findOne({ _id: ID });
     const reported_User = await User.findByIdAndUpdate(
       { _id: Empty_token._id },
       { $set: { user_authentication: "" } },
@@ -405,23 +376,20 @@ const Logout_Existing_User = async (req,res,next) => {
     );
 
     res.send({
-      message : `${reported_User?.name} Logout Successfully`,
-      status : 204,
-
-    })
-
-  }catch(err){
+      message: `${reported_User?.name} Logout Successfully`,
+      status: 204,
+    });
+  } catch (err) {
     res.send({
       message: "Status Not Chnaged",
       status: 404,
     });
   }
-}
+};
 
 module.exports = {
   Register_New_User,
   LoginRegisteredUser,
-  CompleteProfile,
   VerifyRegisteredUser,
   Update_Existing_User,
   Delete_Existing_User_Permanently,
@@ -429,5 +397,5 @@ module.exports = {
   User_Forget_Password,
   OTP_Verification,
   User_Reset_Password,
-  Logout_Existing_User
+  Logout_Existing_User,
 };

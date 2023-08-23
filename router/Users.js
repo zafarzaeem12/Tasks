@@ -4,7 +4,6 @@ const File = require('../middleware/ImagesandVideosData');
 const { 
     Register_New_User ,
     LoginRegisteredUser ,
-    CompleteProfile, 
     VerifyRegisteredUser,
     Update_Existing_User,
     Delete_Existing_User_Permanently,
@@ -29,9 +28,8 @@ const {
 } = require('../controller/Task')
 
 // user api start here
-router.post('/create_new_User'  , Register_New_User);
+router.post('/create_new_User'  , File.user , Register_New_User);
 router.post('/login' ,  LoginRegisteredUser);
-router.post('/completeprofile' , File.user , CompleteProfile);
 router.get('/profile' ,auth ,File.upload ,VerifyRegisteredUser );
 router.put('/update',auth ,File.user , Update_Existing_User );
 router.delete('/delete',auth , File.upload  , Delete_Existing_User_Permanently );
