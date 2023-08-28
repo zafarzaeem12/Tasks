@@ -11,7 +11,8 @@ const {
     OTP_Verification,
     User_Reset_Password,
     Delete_and_Blocked_Existing_User_Temporaray,
-    Logout_Existing_User
+    Logout_Existing_User,
+    SearchByName
 } = require('../controller/Users')
 
 
@@ -38,6 +39,7 @@ router.post('/forget_password' ,  User_Forget_Password );
 router.post('/otp_verify' ,  OTP_Verification);
 router.post('/reset_password' , User_Reset_Password)
 router.post('/logout' , auth , Logout_Existing_User );
+router.get('/search' , auth , SearchByName )
 // user api end here
 
 // task api start here

@@ -388,6 +388,16 @@ const Logout_Existing_User = async (req, res, next) => {
   }
 };
 
+const SearchByName = async (req,res,next) => {
+
+  try{
+    const searchname = await User.find({ name : new RegExp( req.query.name, 'i') })
+    res.status(200).send({ message : "User Searched" , data :searchname })
+  }catch(err){
+    res.status(404).send({ message : "User not found" })
+  }
+}
+
 module.exports = {
   Register_New_User,
   LoginRegisteredUser,
@@ -399,4 +409,5 @@ module.exports = {
   OTP_Verification,
   User_Reset_Password,
   Logout_Existing_User,
+  SearchByName
 };
