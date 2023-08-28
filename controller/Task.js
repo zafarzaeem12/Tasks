@@ -91,7 +91,7 @@ const getallTask = async (req, res, next) => {
       .populate({
         path: "task_provider",
         select: "name email user_image phone_number",
-      });
+      }).sort({ createdAt : -1 })
     res.status(200).send({
       total: alldata.length,
       message: "Data Fetched Successfully",

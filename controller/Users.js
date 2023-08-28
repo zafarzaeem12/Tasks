@@ -55,6 +55,7 @@ const Register_New_User = async (req, res) => {
           ? req.file.path.replace(/\\/g, "/")
           : req.body.user_image,
         phone_number: req.body.phone_number,
+        name : req.body.name,
         user_is_profile_complete: true,
       };
       const Register = await User.create(newUser);
@@ -101,32 +102,32 @@ const LoginRegisteredUser = async (req, res, next) => {
     const original_password = gen_password.toString(CryptoJS.enc.Utf8);
 
     if (email !== LoginUser?.email) {
-      res.send({ message: "Email Not Matched" });
+     return res.status(404).send({ message: "Email Not Matched" });
     } else if (password !== original_password) {
-      res.send({ message: "Password Not Matched" });
+      return res.status(404).send({ message: "Password Not Matched" });
     } else {
       const token = jwt.sign(
         {
           id: LoginUser._id,
         },
         process.env.SECRET_KEY,
-        { expiresIn: "1h" }
+        { expiresIn: "5h" }
       );
       const save_token = await User.findByIdAndUpdate(
         { _id: LoginUser?._id?.toString() },
         { $set: { user_authentication: `${token}` } },
         { new: true }
       );
-      const { user_authentication } = save_token;
+      const { user_authentication , user_image , email , name } = save_token;
 
-      res.send({
+     return res.status(200).send({
         message: "Login Successful",
-        status: 200,
-        data: { user_authentication },
+        status : 200,
+        data:  {user_authentication , user_image , email , name} ,
       });
     }
   } catch (err) {
-    res.send({
+    res.status(404).send({
       message: "Login Failed",
       status: 404,
     });

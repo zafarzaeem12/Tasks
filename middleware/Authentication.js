@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const User = require("../model/Users");
 const User_Token_Authentication = async (req, res, next) => {
-  const token = req.headers["authorization"].split(" ")[1];
+  const token = req.headers["authorization"]?.split(" ")[1];
   const auth = await User.findOne({ user_authentication: token});
 
   if (!token) {
