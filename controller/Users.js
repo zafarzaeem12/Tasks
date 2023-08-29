@@ -118,12 +118,12 @@ const LoginRegisteredUser = async (req, res, next) => {
         { $set: { user_authentication: `${token}` } },
         { new: true }
       );
-      const { user_authentication , user_image , email , name } = save_token;
+      const { user_authentication , user_image , email , name , _id } = save_token;
 
      return res.status(200).send({
         message: "Login Successful",
         status : 200,
-        data:  {user_authentication , user_image , email , name} ,
+        data:  {user_authentication , user_image , email , name , _id} ,
       });
     }
   } catch (err) {
