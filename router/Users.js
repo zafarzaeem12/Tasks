@@ -25,7 +25,8 @@ const {
     Assigned_Task,
     Task_Completed_By_Assigner,
     Task_Completed_By_Provider,
-    All_Completed_Task
+    All_Completed_Task,
+    User_Assigned_Task
 } = require('../controller/Task')
 
 // user api start here
@@ -45,6 +46,7 @@ router.get('/search' , auth , SearchByName )
 // task api start here
 router.post('/createtask' , auth , createTask );
 router.put('/task_assigned/:id' , auth , Assigned_Task);
+router.get('/usertask' , auth , User_Assigned_Task )
 router.put('/task_onboarding/:id' , auth , Task_Completed_By_Assigner )
 router.put('/taskcompleted/:id' , auth , Task_Completed_By_Provider )
 router.get('/get' , auth , getallTask );

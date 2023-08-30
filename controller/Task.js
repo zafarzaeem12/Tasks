@@ -43,6 +43,18 @@ try{
     res.status(404).send({ message : "Task not Assigned" })
 }
 }
+const User_Assigned_Task = async (req,res,next) => {
+  try{
+    const userTask = await Task
+    .find({ task_assign_to : req.id})
+    .populate({path :'task_assign_to' ,select: "name user_image" })
+    .populate({path :'task_provider' ,select: "name user_image" })
+   
+    res.status(200).send({ message : `You have ${userTask.length} Task please check` , data : userTask })
+  }catch(err){
+    res.status(500).send({ message : "Task not Found" })
+  }
+}
 const Task_Completed_By_Assigner  = async (req,res,next) => {
     try{
         const Data = {
@@ -158,5 +170,6 @@ module.exports = {
   Assigned_Task,
   Task_Completed_By_Assigner,
   Task_Completed_By_Provider,
-  All_Completed_Task
+  All_Completed_Task,
+  User_Assigned_Task
 };
