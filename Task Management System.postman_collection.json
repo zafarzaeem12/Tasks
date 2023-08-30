@@ -38,14 +38,6 @@
 					"response": []
 				},
 				{
-					"name": "complete profile",
-					"request": {
-						"method": "POST",
-						"header": []
-					},
-					"response": []
-				},
-				{
 					"name": "login",
 					"request": {
 						"method": "POST",
@@ -166,6 +158,40 @@
 							"path": [
 								"api",
 								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZWM2NDQzZjM0OWNkZjQyNzhjOGM5YiIsImlhdCI6MTY5MzIzMjUwNiwiZXhwIjoxNjkzMjUwNTA2fQ.iEWuYQx_YOAG53DGEUBnqF-TTbxaswOumXWaTnrqibI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/api/search?name=imra",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"search"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "imra"
+								}
 							]
 						}
 					},
@@ -325,6 +351,14 @@
 				},
 				{
 					"name": "completed task",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "userTask",
 					"request": {
 						"method": "GET",
 						"header": []
